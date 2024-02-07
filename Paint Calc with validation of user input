@@ -1,0 +1,79 @@
+// Erik Desilets
+// Module 6-3 Assignment: Validating User Input and Debugging
+// 04 December 2021
+// IT-145-J2003 - Prof. Jim Barringer
+
+import java.util.Scanner;
+
+public class Paint1 {
+
+    public static void main(String[] args) {
+        Scanner scnr = new Scanner(System.in);
+        double wallHeight = 0.0;
+        double wallWidth = 0.0;
+        double wallArea = 0.0;
+        double gallonsPaintNeeded;
+        char quitCmd = 'c';
+        
+        final double squareFeetPerGallons = 350.0;
+        
+        
+        
+     // A do-while loop to ensure input is valid 
+        do {
+        	try {
+        		
+        		do {
+        			// Prompt user to input wall's height
+        			System.out.println("Enter wall height (feet): ");
+        			while(!scnr.hasNextDouble()) {
+        				scnr.next();    											// flushes scnr to reset the input value 
+        				System.out.println("Enter a valid Height (feet): ");
+        			}
+            		wallHeight = scnr.nextDouble();
+            		
+        			// if statement to verify valid inputs
+            		if (wallHeight <= 0.0) { 
+            			throw new Exception("Invalid height."); // throws invalid exception to be displayed if calculation cannot be ran based upon poor user input
+            		}
+        		} while (wallHeight <= 0);
+        		
+        		do {
+        			// Prompt user to input wall's width
+        			System.out.println("Enter wall width (feet): ");
+        			while(!scnr.hasNextDouble()) {
+        				scnr.next();
+        				System.out.println("Enter a valid width (feet): ");
+        			}
+        			wallWidth = scnr.nextDouble();
+        		
+        			//if statement to verify valid input
+        			if (wallWidth <= 0.0 ) {
+        				throw new Exception("Invalid width.");   // throws invalid exception to be displayed if wrong input is entered
+        			}
+        		} while (wallWidth <= 0);
+        		
+                // Calculate and output wall area
+                wallArea = wallHeight * wallWidth;
+                System.out.println("Wall area: " + wallArea + " square feet");
+        		
+                
+             // Calculate and output the amount of paint (in gallons) needed to paint the wall
+                gallonsPaintNeeded = wallArea/squareFeetPerGallons;
+                System.out.println("Paint needed: " + gallonsPaintNeeded + " gallons");
+        		
+        	} //end try
+        	
+        	catch (Exception excpt) {
+        		System.out.println(excpt.getMessage());
+        		System.out.println("Cannot calculate the amount of paint needed without proper data");
+        		
+        	} //end catch
+        
+        	System.out.print("Enter any key to try again or press 'q' to quit the calculator: ");
+        	quitCmd = scnr.next().charAt(0);
+        	
+        } while (quitCmd != 'q');     // end do while loop
+        scnr.close();
+    }
+}
